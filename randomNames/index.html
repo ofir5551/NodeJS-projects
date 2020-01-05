@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <input type="number" id="input" />
+    <button onclick="getNames(document.getElementById(`input`).value)">Generate</button>
+    <div >Number of people: <span id="count"></spanid="count">0</div>
+    <br />
+    <button id="random" onclick="random()">Random</button>
+    <table id="table">
+        <tr>
+            <th>ID</th>
+            <th>First Names</th>
+            <th>Last Names</th>
+            <th>Email</th>
+        </tr>
+    </table>
+</body>
+
+</html>

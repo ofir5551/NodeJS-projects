@@ -1,0 +1,21 @@
+body {
+    font-family: Rubik;
+}
+
+th,
+td {
+    padding-right: 75px;
+    padding-bottom: 15px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+
+}
+
+table {
+    margin-top: 35px;
+    border: 1px solid #ddd;
+}
+
+button#random{
+    margin-top: 10px;
+}
