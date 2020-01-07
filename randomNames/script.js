@@ -10,27 +10,31 @@ class Person {
     }
 }
 
-let arr = [];
+var arr = [];
 // Fetch a list of random names
 async function getNames(num) {
     let res = await fetch(`http://www.filltext.com/?rows=${num}&fname={firstName}&lname={lastName}&pretty=true`);
     let body = await res.json();
+    let tempArray = [];
 
-    //console.log(body);
 
+    for (let i in body) {
+        tempArray.push(new Person(body[i].fname, body[i].lname));
+        arr.push(tempArray[i]);
+    }
 
-    for (let i = 0; i < body.length; i++)
-        arr.push(new Person(body[i].fname, body[i].lname));
+    console.log("Global array: ", arr);
+    console.log("Temp array: ", tempArray);
 
-    console.log(arr);
-    
-    createTable(arr);
+    updateTable(tempArray);
 }
 
-function createTable(names) {
+function updateTable(namesArr) {
     var table = document.getElementById("table");
-    for (i of names) {
+
+    for (let i of namesArr) {
         var row = table.insertRow(1);
+
         for (let j = 0; j < 4; j++) {
             var cell = row.insertCell(j);
             switch (j) {
@@ -49,12 +53,14 @@ function createTable(names) {
             }
         }
     }
-    document.getElementById("count").innerHTML = arr.length;
+
+    document.getElementById("count").innerHTML = arr.length;    // Update count
 }
 
 
 let random = () => {
     let randomNum = Math.floor(Math.random() * arr.length);
+
     alert(`${arr[randomNum].first} ${arr[randomNum].last}`);
     console.log(`Random person's ID is ${arr[randomNum].id} \nArray size: ${arr.length}`);
 };
