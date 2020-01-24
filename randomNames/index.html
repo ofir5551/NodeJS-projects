@@ -2,22 +2,40 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js"></script>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <h1>Random People generator</h1>
+    <p>Number of random people to generate: </p>
+    
     <input type="number" id="input" />
-    <button onclick="getNames(document.getElementById(`input`).value)">Generate</button>
-    <div >Number of people: <span id="count"></spanid="count">0</div>
-    <br />
-    <button id="random" onclick="random()">Random</button>
-    <table id="table">
+    <button onclick="generatePeople(document.getElementById(`input`).value)">Generate</button>
+    <button onclick="selectRandom()">Random</button>
+    <br>
+
+    <div id="manualAddPanel">
+        <label>First name: </label><input type="text" id="manualFirst" /><br>
+        <label>Last name: </label><input type="text" id="manualLast" /><br>
+        <label>Country: </label><input type="text" id="manualCountry" /><br>
+        <button onclick="addManually()">Add</button>
+    </div>
+
+    
+    <button onclick="showManualPanel()">Manual</button>
+
+
+    <div id="countArea"></div>
+    <label>Total number of people: <span id="count">0</span></label>
+    
+    <table id="myTable" border="1px">
         <tr>
-            <th>ID</th>
-            <th>First Names</th>
-            <th>Last Names</th>
-            <th>Email</th>
+            <th>id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Country</th>
         </tr>
     </table>
 </body>

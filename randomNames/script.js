@@ -1,66 +1,119 @@
-class Person {
-    static id = 0;
+let Person = class {
+    static count = 0;
 
-    constructor(firstName, lastName) {
-        this.id = Person.id++;
-        this.first = firstName;
-        this.last = lastName;
-        // Generates a random email base on first name and a random number
-        this.email = this.first.toLowerCase() + Math.floor(Math.random() * 255) + '@gmail.com';
+    constructor(firstName, lastName, country) {
+        this.id = Person.count++;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.country = country;
     }
 }
 
-var arr = [];
-// Fetch a list of random names
-async function getNames(num) {
-    let res = await fetch(`http://www.filltext.com/?rows=${num}&fname={firstName}&lname={lastName}&pretty=true`);
+let people = [];
+let tableRowsCount = 1;
+
+async function generatePeople(input) {
+    let res = await fetch(`http://www.filltext.com/?rows=${input}&firstName={firstName}&lastName={lastName}&country={country}&pretty=true`);
     let body = await res.json();
-    let tempArray = [];
 
+    let tempArray = appendArrays(body);
 
-    for (let i in body) {
-        tempArray.push(new Person(body[i].fname, body[i].lname));
-        arr.push(tempArray[i]);
-    }
-
-    console.log("Global array: ", arr);
-    console.log("Temp array: ", tempArray);
+    console.log(`people: `);
+    console.log(people);
 
     updateTable(tempArray);
 }
 
-function updateTable(namesArr) {
-    var table = document.getElementById("table");
+// Append new people to tempArray array
+function appendArrays(body) {
+    let tempArray = []; // This array stores the newly-generated people
 
-    for (let i of namesArr) {
-        var row = table.insertRow(1);
-
-        for (let j = 0; j < 4; j++) {
-            var cell = row.insertCell(j);
-            switch (j) {
-                case 0:
-                    cell.innerHTML = `${i.id}`;
-                    break;
-                case 1:
-                    cell.innerHTML = `${i.first}`;
-                    break;
-                case 2:
-                    cell.innerHTML = `${i.last}`;
-                    break;
-                case 3:
-                    cell.innerHTML = `${i.email}`;
-                    break;
-            }
-        }
+    for (let i in body) {
+        tempArray.push(new Person(body[i].firstName, body[i].lastName, body[i].country));
+        people.push(tempArray[i]);
     }
-
-    document.getElementById("count").innerHTML = arr.length;    // Update count
+    return tempArray;
 }
 
+function getpeople() {
+    return people;
+}
 
-let random = () => {
-    let randomNum = Math.floor(Math.random() * arr.length);
+// Adds the newly generated people to the existing HTML table
+function updateTable(data) {
+    let table = document.getElementById("myTable");
 
-    alert(`${arr[randomNum].first} ${arr[randomNum].last}`);
-    console.log(`Random person's ID is ${arr[randomNum].id} \nArray size: ${arr.length}`);
-};
+    switch (data.constructor.name) {
+        case 'Person': {
+            let row = table.insertRow(tableRowsCount++);
+
+            row.insertCell(0).innerHTML = data.id;
+            row.insertCell(1).innerHTML = data.firstName;
+            row.insertCell(2).innerHTML = data.lastName;
+            row.insertCell(3).innerHTML = data.country;
+        }
+            break;
+
+        case 'Array': {
+            for (let i in data) {
+                let row = table.insertRow(tableRowsCount++);
+
+                row.insertCell(0).innerHTML = data[i].id;
+                row.insertCell(1).innerHTML = data[i].firstName;
+                row.insertCell(2).innerHTML = data[i].lastName;
+                row.insertCell(3).innerHTML = data[i].country;
+            }
+        }
+            break;
+
+        default:
+            console.log("Error updating table");
+            break;
+    }
+
+    document.getElementById("count").innerHTML = Person.count;
+}
+
+// Select a random person from people array
+function selectRandom() {
+    if (people.length == 0) {
+        console.log('people array is empty');
+        return;
+    }
+
+    const num = Math.floor(Math.random() * people.length);
+
+    console.log(`Random person selected: id ${people[num].id}`);
+    alert(getPersonInfo(people[num]));
+}
+
+function getPersonInfo(person) {
+    return `${person.id} - ${person.firstName} ${person.lastName} \t country: ${person.country}`;
+}
+
+// TODO -- change input type to form with submit button
+function addManually() {
+    let first = document.getElementById('manualFirst').value;
+    let last = document.getElementById('manualLast').value;
+    let country = document.getElementById('manualCountry').value;
+
+    if (first.length == 0 || last.length == 0 || country.length == 0) {
+        console.log('Error manually adding new person');
+        return;
+    }
+
+    let p = new Person(first, last, country);
+
+    people.push(p);
+
+    updateTable(p);
+    document.getElementById('manualAddPanel').style.display = 'none';
+}
+
+function showManualPanel() {
+    document.getElementById('manualFirst').value = null;
+    document.getElementById('manualLast').value = null;
+    document.getElementById('manualCountry').value = null;
+
+    document.getElementById('manualAddPanel').style.display = 'initial';
+}

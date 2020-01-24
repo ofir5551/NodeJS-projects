@@ -1,21 +1,26 @@
 body {
-    font-family: Rubik;
+    font-family: 'Rubik', sans-serif;
 }
 
-th,
-td {
-    padding-right: 75px;
-    padding-bottom: 15px;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-
+th, td {
+    padding: 15px;
 }
 
 table {
-    margin-top: 35px;
-    border: 1px solid #ddd;
+    margin-top: 20px;
 }
 
-button#random{
-    margin-top: 10px;
+#countArea {
+    margin-top: 20px;
+}
+
+#manualAddPanel {
+    display: none;
+    float:left;
+    position: absolute;
+    left: 50%;
+    text-align: right;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
 }
