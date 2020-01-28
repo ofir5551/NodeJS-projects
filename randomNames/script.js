@@ -18,8 +18,7 @@ async function generatePeople(input) {
 
     let tempArray = appendArrays(body);
 
-    console.log(`people: `);
-    console.log(people);
+    console.log(getPeople());
 
     updateTable(tempArray);
 }
@@ -35,7 +34,7 @@ function appendArrays(body) {
     return tempArray;
 }
 
-function getpeople() {
+function getPeople() {
     return people;
 }
 
@@ -107,6 +106,7 @@ function addManually() {
     people.push(p);
 
     updateTable(p);
+    console.log(getPeople());
     document.getElementById('manualAddPanel').style.display = 'none';
 }
 

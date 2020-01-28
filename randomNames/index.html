@@ -9,8 +9,8 @@
 
 <body>
     <h1>Random People generator</h1>
-    <p>Number of random people to generate: </p>
-    
+    <p>Number of random people to generate:</p>
+
     <input type="number" id="input" />
     <button onclick="generatePeople(document.getElementById(`input`).value)">Generate</button>
     <button onclick="selectRandom()">Random</button>
@@ -23,13 +23,13 @@
         <button onclick="addManually()">Add</button>
     </div>
 
-    
+
     <button onclick="showManualPanel()">Manual</button>
 
 
     <div id="countArea"></div>
     <label>Total number of people: <span id="count">0</span></label>
-    
+
     <table id="myTable" border="1px">
         <tr>
             <th>id</th>
